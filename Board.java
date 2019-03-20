@@ -53,8 +53,9 @@ public class Board extends JFrame implements ActionListener
 
           container.add(square[x][y].button);//add all squares to the board
          }
-       }
+       }   
     }
+
     /**
     *Show the contents of the created board
      */
@@ -76,7 +77,7 @@ public class Board extends JFrame implements ActionListener
      *Called function to see the available moves for a piece
     * @param x is the initial position to check for available 
     * @param y is the initial position to check for available 
-    * The moveTo() method is called privately within this method
+    * The moveTo() method is called privately within this method]
    */
     
     private void setHighlights(int x, int y)
@@ -86,38 +87,71 @@ public class Board extends JFrame implements ActionListener
         {
         if(x-1>=0 && y-1>=0 && x-1<8 && y-1<8)
         //making sure the bellow if doesn't go out of bounds
-        if(square[x-1][y-1].hasWhitePieceOn(square[x-1][y-1].button)==false && square[x-1][y-1].hasRedPieceOn(square[x-1][y-1].button)==false)
-        //top left  
+          if(square[x-1][y-1].hasWhitePieceOn(square[x-1][y-1].button)==false && square[x-1][y-1].hasRedPieceOn(square[x-1][y-1].button)==false)
+          //top left  
             {
               square[x-1][y-1].addSelected(square[x-1][y-1].button);
             }
-
+        else if(x-2>=0 && y-2>=0 && x-2<=7 && y-2<=7)
+        //check if the capture-type move that's top left
+          {
+            if(square[x-2][y-2].hasWhitePieceOn(square[x-2][y-2].button)==false && square[x-2][y-2].hasRedPieceOn(square[x-2][y-2].button)==false)
+             {
+               if(square[x-1][y-1].hasWhitePieceOn(square[x-1][y-1].button)==false)
+                square[x-2][y-2].addSelected(square[x-2][y-2].button);
+             }
+          } 
         if(x-1>=0 && y+1>=0 && x-1<8 && y+1<8)
         //making sure the bellow if doesn't go out of bounds
-        if(square[x-1][y+1].hasWhitePieceOn(square[x-1][y+1].button)==false && square[x-1][y+1].hasRedPieceOn(square[x-1][y+1].button)==false)
-        //top right
+          if(square[x-1][y+1].hasWhitePieceOn(square[x-1][y+1].button)==false && square[x-1][y+1].hasRedPieceOn(square[x-1][y+1].button)==false)
+          //top right
             {
               square[x-1][y+1].addSelected(square[x-1][y+1].button);
             }
+        else if(x-2>=0 && y+2>=0 && x-2<=7 && y+2<=7)
+        //making sure the bellow if doesn't go out of bounds
+        {
+           if(square[x-2][y+2].hasRedPieceOn(square[x-2][y+2].button)==false && square[x-2][y+2].hasWhitePieceOn(square[x-2][y+2].button)==false)
+            {
+              if(square[x-1][y+1].hasWhitePieceOn(square[x-1][y+1].button)==false)
+              square[x-2][y+2].addSelected(square[x-2][y+2].button);
+            }
+        }
         }
         if(square[x][y].hasRedPieceOn(square[x][y].button)==true)
         //only red pieces
         {
           if(x+1>=0 && y+1>=0 && x+1<8 && y+1<8) 
           //making sure the bellow if doesn't go out of bounds         
-          if(square[x+1][y+1].hasWhitePieceOn(square[x+1][y+1].button)==false && square[x+1][y+1].hasRedPieceOn(square[x+1][y+1].button)==false)
-          //bottom right
+            if(square[x+1][y+1].hasWhitePieceOn(square[x+1][y+1].button)==false && square[x+1][y+1].hasRedPieceOn(square[x+1][y+1].button)==false)
+            //bottom right
              { 
                square[x+1][y+1].addSelected(square[x+1][y+1].button);
              }
-
+          else if(x+2>=0 && y+2>=0 && x+2<=7 && y+2<=7)
+          {
+            if(square[x+2][y+2].hasWhitePieceOn(square[x+2][y+2].button)==false && square[x+2][y+2].hasRedPieceOn(square[x+2][y+2].button)==false)
+             {
+               if(square[x+1][y+1].hasRedPieceOn(square[x+1][y+1].button)==false)
+               square[x+2][y+2].addSelected(square[x+2][y+2].button);
+             }
+          }
           if(x+1>=0 && y-1>=0 && x+1<8 && y-1<8)
           //making sure the bellow if doesn't go out of bounds
-          if(square[x+1][y-1].hasWhitePieceOn(square[x+1][y-1].button)==false && square[x+1][y-1].hasRedPieceOn(square[x+1][y-1].button)==false)
-          //bottom left
+            if(square[x+1][y-1].hasWhitePieceOn(square[x+1][y-1].button)==false && square[x+1][y-1].hasRedPieceOn(square[x+1][y-1].button)==false)
+            //bottom left
               {
                 square[x+1][y-1].addSelected(square[x+1][y-1].button);
-              }        
+              }  
+          else if(x+2>=0 && y-2>=0 && x+2<8 && y-2<=7)
+          //making sure the bellow if doesn't go out of bounds     
+             {
+               if(square[x+2][y-2].hasWhitePieceOn(square[x+2][y-2].button)==false && square[x+2][y-2].hasRedPieceOn(square[x+2][y-2].button)==false)
+                {
+                  if(square[x+1][y-1].hasRedPieceOn(square[x+1][y-1].button)==false)
+                  square[x+2][y-2].addSelected(square[x+2][y-2].button);
+                }
+             }
         }
     }
 
@@ -201,6 +235,65 @@ public class Board extends JFrame implements ActionListener
        return false;
 
     } 
+
+    /** 
+     * Called function to privately check if a piece can capture another
+     * @param x and @param y are the initial positions
+     * @param i and @param j are the desired positions
+     * @return true if a piece can capture another
+     * @return false otherwise 
+    */
+
+    private boolean canCapture(int x,int y,int i,int j)
+    {
+      if(square[x][y].hasWhitePieceOn(square[x][y].button)==true)
+      {
+        if(i==x-2 && j==y-2)
+         {
+           if(square[i][j].hasRedPieceOn(square[i][j].button)==false && square[i][j].hasWhitePieceOn(square[i][j].button)==false)
+            {
+              if(square[i+1][j+1].hasRedPieceOn(square[i+1][j+1].button)==true)
+               {
+                 return true;
+               }
+            }
+         }
+        if(i==x-2 && j==y+2)
+        {
+          if(square[i][j].hasRedPieceOn(square[i][j].button)==false && square[i][j].hasWhitePieceOn(square[i][j].button)==false)
+           {
+             if(square[i+1][j-1].hasRedPieceOn(square[i+1][j-1].button)==true)
+              {
+                return true;
+              }
+           }
+        }
+      }
+    if(square[x][y].hasRedPieceOn(square[x][y].button)==true)
+    {
+      if(i==x+2 && j==y+2)
+      {
+       if(square[i][j].hasRedPieceOn(square[i][j].button)==false && square[i][j].hasWhitePieceOn(square[i][j].button)==false)
+        {
+          if(square[i-1][j-1].hasWhitePieceOn(square[i-1][j-1].button)==true)
+           {
+             return true;
+           }
+        }  
+      }
+      if(i==x+2 && j==y-2)
+      {
+       if(square[i][j].hasRedPieceOn(square[i][j].button)==false && square[i][j].hasWhitePieceOn(square[i][j].button)==false)
+        {
+          if(square[i-1][j+1].hasWhitePieceOn(square[i-1][j+1].button)==true)
+           {
+             return true;
+           }
+        }
+      }
+    }
+      return false;
+    }
     /**
     * Called method privately through actionPerformed in order to make a move on the board
     * @param x, @param y are the initial positions on the board
@@ -219,8 +312,22 @@ public class Board extends JFrame implements ActionListener
           square[i][j].addWhitePiece();
           turn=false; //switch to red's turn
         }
+        if(i==x-2 && j==y-2 && canCapture(x,y,x-2,y-2)==true)
+         {
+          square[x][y].addWhite(square[x][y].button);
+          square[x-1][y-1].addWhite(square[x-1][y-1].button);
+          square[i][j].addWhitePiece();
+          turn=false; //switch to red's turn 
+         }
+        if(i==x-2 && j==y+2 && canCapture(x,y,x-2,y+2)==true)
+         {
+          square[x][y].addWhite(square[x][y].button);
+          square[x-1][y+1].addWhite(square[x-1][y+1].button);
+          square[i][j].addWhitePiece();
+          turn=false; //switch to red's turn 
+         }
       }     
-      if(square[x][y].hasRedPieceOn(square[x][y].button)==true && resetTurn(turn==false))
+      if(square[x][y].hasRedPieceOn(square[x][y].button)==true && resetTurn(turn)==false)
       //do a move specific to red pieces
       {
         if(canMoveTo(x,y,i,j)==true)
@@ -229,6 +336,20 @@ public class Board extends JFrame implements ActionListener
         square[x][y].addWhite(square[x][y].button);
         square[i][j].addRedPiece();
         turn= true; //switch to white's turn
+        }
+        if(i==x+2 && j==y+2 && canCapture(x,y,x+2,y+2)==true)
+        {
+         square[x][y].addWhite(square[x][y].button);
+         square[x+1][y+1].addWhite(square[x+1][y+1].button);
+         square[i][j].addRedPiece();
+         turn= true; //switch to white's turn 
+        }
+        if(i==x+2 && j==y-2 && canCapture(x,y,x+2,y-2)==true)
+        {
+         square[x][y].addWhite(square[x][y].button);
+         square[x+1][y-1].addWhite(square[x+1][y-1].button);
+         square[i][j].addRedPiece();
+         turn= true; //switch to white's turn
         }
       }
       clearHighlights();
@@ -280,4 +401,4 @@ public class Board extends JFrame implements ActionListener
        moveTo(a,b,c,d);
        
     }
-}            
+}
